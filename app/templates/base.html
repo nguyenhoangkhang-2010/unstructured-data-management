@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Mining & Recruitment System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/layout.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/tables.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/forms.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/buttons.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/cards.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/responsive.css') }}" rel="stylesheet" />
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-brand">
+                    <h5 class="text-white text-center mb-0 mt-2">CV Mining System</h5>
+                </div>
+                <hr class="text-secondary m-0">
+                <a href="{{ url_for('dashboard.dashboard_home') }}" title="Dashboard"><i class="fas fa-chart-line fa-fw"></i> <span>Dashboard</span></a>
+                <a href="{{ url_for('candidate.list_candidates') }}" title="Candidates"><i class="fas fa-users fa-fw"></i> <span>Candidates</span></a>
+                <a href="{{ url_for('job.list_jobs') }}" title="Jobs"><i class="fas fa-briefcase fa-fw"></i> <span>Jobs</span></a>
+                <a href="{{ url_for('application.list_applications') }}" title="Applications"><i class="fas fa-file-alt fa-fw"></i> <span>Applications</span></a>
+                <a href="{{ url_for('mining.run_mining') }}" title="Data Mining"><i class="fas fa-brain fa-fw"></i> <span>Data Mining</span></a>
+                <a href="{{ url_for('report.index') }}" title="Reports"><i class="fas fa-chart-pie fa-fw"></i> <span>Reports</span></a>
+            </div>
+            <!-- /#sidebar -->
+
+            <!-- Page Content -->
+            <div class="main-content flex-grow-1" id="page-content-wrapper">
+                <nav class="top-navbar d-flex justify-content-between align-items-center mb-4">
+                    <button class="icon-btn" id="sidebarToggle" title="Toggle Sidebar"><i class="fas fa-bars fs-5"></i></button>
+                    <div class="d-flex align-items-center gap-3">
+                        <form action="{{ url_for('candidate.list_candidates') }}" method="GET" class="input-group">
+                            <input type="text" name="q" class="form-control bg-light border-0" placeholder="Search candidates...">
+                            <button type="submit" class="btn btn-light"><i class="fas fa-search"></i></button>
+                        </form>
+                        <a href="{{ url_for('dashboard.index') }}" class="icon-btn" title="Public Homepage"><i class="fas fa-home fs-5"></i></a>
+                        <button class="icon-btn" id="darkModeToggle" title="Toggle Dark Mode"><i class="fas fa-moon fs-5"></i></button>
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=2563EB&color=fff" class="rounded-circle shadow-sm border" width="42" height="42" alt="Admin">
+                    </div>
+                </nav>
+                <div class="content-wrapper p-4 pt-0">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show shadow-sm" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% block content %}{% endblock %}
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+</body>
+</html>

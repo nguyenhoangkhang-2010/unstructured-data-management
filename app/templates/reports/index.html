@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h2 class="mb-0">Reports & Data Exports</h2>
+        <small class="text-muted">Download mining results and candidate datasets</small>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card modern-card text-center h-100">
+            <div class="card-body py-5">
+                <i class="fas fa-file-csv fa-4x text-success mb-3"></i>
+                <h4 class="fw-bold">CSV Export</h4>
+                <p class="text-muted">Download the full dataset of candidates mapped with AI-predicted clusters.</p>
+                {% if csv_exists %}
+                <a href="{{ url_for('report.download_report', file_type='csv') }}" class="modern-btn success-btn mt-3 w-100"><i class="fas fa-download"></i> Download CSV</a>
+                {% else %}
+                <button class="modern-btn outline-btn mt-3 w-100" disabled>No Data Available</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card modern-card text-center h-100">
+            <div class="card-body py-5">
+                <i class="fas fa-file-alt fa-4x text-primary mb-3"></i>
+                <h4 class="fw-bold">Text Report</h4>
+                <p class="text-muted">Download evaluation metrics (Silhouette, Inertia) and clustering distribution.</p>
+                {% if txt_exists %}
+                <a href="{{ url_for('report.download_report', file_type='txt') }}" class="modern-btn primary-btn mt-3 w-100"><i class="fas fa-download"></i> Download TXT</a>
+                {% else %}
+                <button class="modern-btn outline-btn mt-3 w-100" disabled>No Data Available</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card modern-card text-center h-100">
+            <div class="card-body py-5">
+                <i class="fas fa-image fa-4x text-warning mb-3"></i>
+                <h4 class="fw-bold">Visualizations</h4>
+                <p class="text-muted">Export the cluster distribution bar chart as a PNG image for your presentations.</p>
+                {% if png_exists %}
+                <a href="{{ url_for('report.download_report', file_type='png') }}" class="modern-btn warning-btn mt-3 w-100"><i class="fas fa-download"></i> Download PNG</a>
+                {% else %}
+                <button class="modern-btn outline-btn mt-3 w-100" disabled>No Image Available</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+ .kpi-card h5 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+ .kpi-card h3 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+ /* Gradient KPI Backgrounds */
+ .kpi-primary { background: linear-gradient(135deg, var(--primary-color), #3B82F6); color: white; }
+ .kpi-primary h5, .kpi-primary h3 { color: white; }
+
+ .kpi-success { background: linear-gradient(135deg, var(--success-color), #22C55E); color: white; }
+ .kpi-success h5, .kpi-success h3 { color: white; }
+
+ .kpi-warning { background: linear-gradient(135deg, var(--warning-color), #FCD34D); color: #1E293B; }
+ .kpi-warning h5, .kpi-warning h3 { color: #1E293B; }
+
+ .kpi-danger { background: linear-gradient(135deg, var(--danger-color), #EF4444); color: white; }
+ .kpi-danger h5, .kpi-danger h3 { color: white; }
+
+ .kpi-info { background: linear-gradient(135deg, var(--info-color), #0EA5E9); color: white; }
+ .kpi-info h5, .kpi-info h3 { color: white; }
+
+ .chart-container img { border-radius: 8px; width: 100%; height: auto; }

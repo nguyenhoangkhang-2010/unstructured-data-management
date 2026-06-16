@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- Public Landing Page -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Dream Job - CV Mining System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/layout.css') }}" rel="stylesheet" />
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(37, 99, 235, 0.8), rgba(37, 99, 235, 0.8)), url('https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2070') center center no-repeat;
+            background-size: cover;
+            padding: 100px 0;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">CV Mining System</a>
+            <a href="{{ url_for('dashboard.dashboard_home') }}" class="btn btn-outline-primary">Admin Dashboard</a>
+        </div>
+    </nav>
+
+    <div class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Find The Job That Fits Your Life</h1>
+            <p class="lead mb-4">With our advanced data mining technology, we connect you with the best opportunities.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group input-group-lg">
+                        <input type="text" class="form-control" placeholder="Job title, keywords, or company">
+                        <button class="btn btn-warning text-dark fw-bold" type="button">Search Jobs</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Featured Jobs</h2>
+        <div class="row">
+            {% for job in jobs[:6] %} {# Display first 6 jobs #}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ job.title }}</h5>
+                        <p class="card-text text-muted">{{ job.description | truncate(100) }}</p>
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

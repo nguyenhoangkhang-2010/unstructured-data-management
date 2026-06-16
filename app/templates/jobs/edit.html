@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Job: {{ job.title }}</h2>
+<hr>
+<div class="card modern-card">
+    <div class="card-body">
+        <form action="{{ url_for('job.edit_job', job_id=job._id) }}" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="floating-label">Job Title</label>
+                    <input type="text" name="title" class="modern-input" value="{{ job.title }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="floating-label">Salary ($/month)</label>
+                    <input type="number" name="salary" class="modern-input" value="{{ job.salary }}" required>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label class="floating-label">Required Skills (comma separated)</label>
+                    <input type="text" name="required_skills" class="modern-input" value="{{ job.required_skills|join(', ') }}" required>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label class="floating-label">Job Description</label>
+                    <textarea name="description" class="modern-input" rows="5" required>{{ job.description }}</textarea>
+                </div>
+            </div>
+            <button type="submit" class="modern-btn primary-btn"><i class="fas fa-save"></i> Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

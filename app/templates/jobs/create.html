@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Post a New Job</h2>
+<hr>
+<div class="card modern-card">
+    <div class="card-body">
+        <form action="{{ url_for('job.create_job') }}" method="post">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="floating-label">Job Title</label>
+                    <input type="text" name="title" class="modern-input" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="floating-label">Salary ($/month)</label>
+                    <input type="number" name="salary" class="modern-input" required>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label class="floating-label">Required Skills (comma separated)</label>
+                    <input type="text" name="required_skills" class="modern-input" placeholder="e.g. Python, Docker, AWS">
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label class="floating-label">Job Description</label>
+                    <textarea name="description" class="modern-input" rows="5" required></textarea>
+                </div>
+            </div>
+            <button type="submit" class="modern-btn primary-btn"><i class="fas fa-paper-plane"></i> Publish Job</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

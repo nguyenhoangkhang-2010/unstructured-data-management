@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>CV Data Mining Results (K-Means)</h2><hr>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="dashboard-card kpi-card kpi-info mb-3"><div class="card-body"><h5>Silhouette Score</h5><h3>{{ "%.4f"|format(silhouette) }}</h3></div></div>
+    </div>
+    <div class="col-md-6">
+        <div class="dashboard-card kpi-card kpi-danger mb-3"><div class="card-body"><h5>Inertia</h5><h3>{{ "%.4f"|format(inertia) }}</h3></div></div>
+    </div>
+</div>
+<div class="card modern-card mb-4 chart-container">
+    <div class="card-body text-center">
+        <img src="{{ url_for('static', filename=dist_img) }}" class="img-fluid rounded" alt="Cluster Distribution">
+    </div>
+</div>
+<h4>Prominent Keyword WordClouds</h4>
+<div class="row">
+    {% for img in wc_imgs %}
+    <div class="col-md-6 mb-4"><div class="card modern-card p-3"><img src="{{ url_for('static', filename=img) }}" class="img-fluid rounded" alt="WordCloud for a role"></div></div>
+    {% endfor %}
+</div>
+{% endblock %}

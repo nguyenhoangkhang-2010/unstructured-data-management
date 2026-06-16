@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Recruitment Management Dashboard</h2>
+<div class="row">
+    <div class="col-md-4">
+        <div class="dashboard-card kpi-card kpi-primary mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div><h5 class="card-title">Total Candidates</h5><h3>{{ stats.total_candidates }}</h3></div>
+                    <i class="fas fa-users fa-3x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard-card kpi-card kpi-success mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div><h5 class="card-title">Total Jobs</h5><h3>{{ stats.total_jobs }}</h3></div>
+                    <i class="fas fa-briefcase fa-3x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="dashboard-card kpi-card kpi-warning mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div><h5 class="card-title">Applications</h5><h3>{{ stats.total_applications }}</h3></div>
+                    <i class="fas fa-file-alt fa-3x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card modern-card">
+            <div class="card-body">
+                <h5 class="mb-4">Top Candidate Skills Distribution</h5>
+                <div style="position: relative; height: 250px;">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card modern-card h-100">
+            <div class="card-body">
+                <h5 class="mb-4">Recent Activity Logs</h5>
+                <div class="table-responsive">
+                    <table class="table modern-table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th class="ps-3">Action</th>
+                                <th>Module</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for log in recent_logs %}
+                            <tr>
+                                <td class="ps-3"><span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle">{{ log.user_action }}</span></td>
+                                <td><i class="fas fa-cube text-muted me-1"></i> {{ log.entity_type }}</td>
+                                <td class="text-muted small">{{ log.timestamp.strftime('%H:%M - %b %d') if log.timestamp else 'N/A' }}</td>
+                            </tr>
+                            {% else %}
+                            <tr><td colspan="3" class="text-center py-4 text-muted">No logs recorded yet.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="application/json" id="chartLabels">
+{{ chart_data.skill_labels | tojson | safe }}
+</script>
+<script type="application/json" id="chartValues">
+{{ chart_data.skill_values | tojson | safe }}
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    const labels = JSON.parse(document.getElementById('chartLabels').textContent);
+    const values = JSON.parse(document.getElementById('chartValues').textContent);
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: ['#2563EB', '#16A34A', '#F59E0B', '#DC2626', '#8B5CF6'],
+                borderWidth: 0
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '70%' }
+    });
+});
+</script>
+{% endblock %}

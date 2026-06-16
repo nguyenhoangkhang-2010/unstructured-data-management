@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h2 class="mb-0 fw-bold">{{ job.title }}</h2>
+        <small class="text-muted"><i class="fas fa-barcode"></i> {{ job.job_code }} | Posted: {{ job.created_at.strftime('%Y-%m-%d') }}</small>
+    </div>
+    <div class="col-md-4 d-flex justify-content-end gap-2">
+        <a href="{{ url_for('job.edit_job', job_id=job._id) }}" class="modern-btn primary-btn"><i class="fas fa-edit"></i> Edit JD</a>
+        <a href="{{ url_for('job.list_jobs') }}" class="modern-btn outline-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card modern-card h-100">
+            <div class="card-body">
+                <h5 class="fw-bold border-bottom pb-2">Job Overview</h5>
+                <h3 class="text-success my-3">${{ "{:,.0f}".format(job.salary) }} <span class="fs-6 text-muted">/mo</span></h3>
+                <h6 class="fw-bold mt-4">Required Skills:</h6>
+                <div class="mb-3">
+                    {% for skill in job.required_skills %}
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle me-1 p-2">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+                <h6 class="fw-bold mt-4">Job Description:</h6>
+                <p class="text-muted">{{ job.description }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8 mb-4">
+        <div class="card modern-card h-100 border-top-0 border-end-0 border-bottom-0 border-4 border-info">
+            <div class="card-body">
+                <h5 class="fw-bold border-bottom pb-2 mb-4"><i class="fas fa-robot text-info"></i> AI Candidate Matching Engine</h5>
+                <p class="text-muted small mb-4">The system uses TF-IDF and Cosine Similarity to analyze multi-modal profile descriptions and rank candidates.</p>
+                
+                {% for row in ranked_candidates[:10] %}
+                <div class="d-flex align-items-center mb-4 pb-3 border-bottom">
+                    <img src="https://ui-avatars.com/api/?name={{ row.candidate.full_name|urlencode }}&background=random" class="rounded-circle me-3" width="50">
+                    <div class="flex-grow-1">
+                        <h6 class="fw-bold mb-1"><a href="{{ url_for('candidate.view_candidate', cand_id=row.candidate._id) }}" class="text-decoration-none text-dark">{{ row.candidate.full_name }}</a> <span class="badge bg-light text-dark">{{ row.candidate.experience_years }} Yrs Exp</span></h6>
+                        <p class="text-muted small mb-1">{{ row.candidate.skills|join(', ') }}</p>
+                        <div class="progress" style="height: 15px;">
+                            <div class="progress-bar match-progress-bar {% if row.match_score > 75 %}bg-success{% elif row.match_score > 40 %}bg-warning{% else %}bg-danger{% endif %}" role="progressbar" style="width: 0%; transition: width 1s ease-in-out;" data-score="{{ row.match_score }}" aria-valuenow="{{ row.match_score }}" aria-valuemin="0" aria-valuemax="100"><strong>{{ row.match_score }}% Match</strong></div>
+                        </div>
+                    </div>
+                    <div class="ms-4">
+                        <a href="#" class="modern-btn outline-btn btn-sm text-nowrap"><i class="fas fa-check"></i> Shortlist</a>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const progressBars = document.querySelectorAll('.match-progress-bar');
+    progressBars.forEach(function(bar) {
+        const score = bar.getAttribute('data-score');
+        setTimeout(() => { bar.style.width = score + '%'; }, 100);
+    });
+});
+</script>
+{% endblock %}

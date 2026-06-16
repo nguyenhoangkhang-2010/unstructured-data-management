@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col-md-8">
+        <h2 class="mb-0">Candidate Profile</h2>
+        <small class="text-muted">Viewing details for {{ candidate.candidate_code }}</small>
+    </div>
+    <div class="col-md-4 d-flex justify-content-end gap-2">
+        <a href="{{ url_for('candidate.edit_candidate', cand_id=candidate._id) }}" class="modern-btn primary-btn"><i class="fas fa-edit"></i> Edit</a>
+        <a href="{{ url_for('candidate.list_candidates') }}" class="modern-btn outline-btn"><i class="fas fa-arrow-left"></i> Back to List</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card modern-card text-center h-100">
+            <div class="card-body">
+                <img src="https://ui-avatars.com/api/?name={{ candidate.full_name|urlencode }}&background=random&size=150" class="rounded-circle mb-3 shadow-sm" alt="Avatar">
+                <h4 class="fw-bold mb-1">{{ candidate.full_name }}</h4>
+                <p class="text-muted mb-3">
+                    <span class="badge bg-light text-dark border">{{ candidate.candidate_code }}</span>
+                    {% if ai_role %}<span class="badge bg-info text-dark border ms-2" title="AI Skill Cluster"><i class="fas fa-robot"></i> {{ ai_role }}</span>{% endif %}
+                </p>
+                <hr>
+                <div class="text-start mt-3">
+                    <p><i class="fas fa-envelope text-primary me-2 w-15"></i> {{ candidate.email }}</p>
+                    <p><i class="fas fa-phone text-primary me-2 w-15"></i> {{ candidate.phone }}</p>
+                    <p><i class="fas fa-calendar-alt text-primary me-2 w-15"></i> Profile created: {{ candidate.created_at.strftime('%Y-%m-%d') if candidate.created_at else 'N/A' }}</p>
+                    
+                    {% if candidate.cv_file_path %}
+                    <a href="{{ candidate.cv_file_path }}" class="btn btn-outline-primary w-100 mt-3" target="_blank"><i class="fas fa-download"></i> Download CV (PDF)</a>
+                    {% else %}
+                    <button class="btn btn-outline-secondary w-100 mt-3" disabled><i class="fas fa-file-pdf"></i> No CV Uploaded</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mb-4">
+        <div class="card modern-card h-100">
+            <div class="card-body">
+                <h5 class="fw-bold border-bottom pb-2 mb-3">Professional Summary</h5>
+                <div class="mb-4">
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success-subtle fs-6"><i class="fas fa-briefcase"></i> {{ candidate.experience_years }} Years of Experience</span>
+                </div>
+                <h6 class="fw-bold text-muted text-uppercase mb-2">About</h6>
+                <p class="text-body">{{ candidate.profile_description }}</p>
+
+                <h6 class="fw-bold text-muted text-uppercase mt-4 mb-2">Top Skills</h6>
+                <div class="mb-3">
+                    {% for skill in candidate.skills %}
+                    <span class="badge bg-primary bg-opacity-10 text-primary border border-primary-subtle me-1 p-2">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+
+                <h6 class="fw-bold text-muted text-uppercase mt-4 mb-2">Certifications</h6>
+                <ul class="list-group list-group-flush">
+                    {% for cert in candidate.certificates %}
+                    <li class="list-group-item px-0 border-0"><i class="fas fa-award text-warning me-2"></i> {{ cert }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h6 class="fw-bold text-muted text-uppercase mt-4 mb-2"><i class="fas fa-brain"></i> Multi-modal AI Analysis</h6>
+                <div class="bg-light p-3 rounded border">
+                    <p class="mb-2"><strong><i class="fas fa-image text-success"></i> OCR Text:</strong> <span class="text-muted">{{ candidate.ocr_text or 'Chưa phân tích' }}</span></p>
+                    <p class="mb-2"><strong><i class="fas fa-microphone text-warning"></i> Transcript:</strong> <span class="text-muted">{{ candidate.transcript or 'Chưa phân tích' }}</span></p>
+                    <p class="mb-0"><strong><i class="fas fa-globe text-primary"></i> Social Scan:</strong> 
+                        {% if candidate.social_links %}
+                            {% for platform, url in candidate.social_links.items() %}
+                                <a href="{{ url }}" target="_blank" class="badge bg-secondary text-decoration-none me-1">{{ platform | capitalize }}</a>
+                            {% endfor %}
+                        {% else %}
+                            <span class="text-muted">Không có dữ liệu</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

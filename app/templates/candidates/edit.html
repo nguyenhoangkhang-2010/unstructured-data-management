@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Candidate: {{ candidate.full_name }}</h2>
+<hr>
+<div class="card modern-card">
+    <div class="card-body">
+        <form action="{{ url_for('candidate.edit_candidate', cand_id=candidate._id) }}" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="full_name" class="floating-label">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" class="modern-input" value="{{ candidate.full_name }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="floating-label">Email</label>
+                    <input type="email" id="email" name="email" class="modern-input" value="{{ candidate.email }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone" class="floating-label">Phone</label>
+                    <input type="text" id="phone" name="phone" class="modern-input" value="{{ candidate.phone }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="experience_years" class="floating-label">Experience (Years)</label>
+                    <input type="number" id="experience_years" name="experience_years" class="modern-input" value="{{ candidate.experience_years }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="skills" class="floating-label">Skills (comma separated)</label>
+                    <input type="text" id="skills" name="skills" class="modern-input" value="{{ candidate.skills|join(', ') }}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="certificates" class="floating-label">Certificates (comma separated)</label>
+                    <input type="text" id="certificates" name="certificates" class="modern-input" value="{{ candidate.certificates|join(', ') }}">
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="cv_file" class="floating-label">Upload New CV (PDF) - Leave blank to keep current</label>
+                    <input type="file" id="cv_file" name="cv_file" class="form-control" accept=".pdf">
+                </div>
+                <div class="col-md-12 mb-3">
+                    <label for="profile_description" class="floating-label">Profile Description</label>
+                    <textarea id="profile_description" name="profile_description" class="modern-input" rows="5">{{ candidate.profile_description }}</textarea>
+                </div>
+            </div>
+            <button type="submit" class="modern-btn primary-btn"><i class="fas fa-save"></i> Update Candidate</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

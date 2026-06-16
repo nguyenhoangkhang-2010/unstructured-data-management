@@ -1,0 +1,45 @@
+ .modern-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 22px;
+    font-family: var(--font-family);
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+ .primary-btn { background-color: var(--primary-color); color: white; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); }
+ .primary-btn:hover { background-color: #1D4ED8; transform: translateY(-2px); box-shadow: 0 7px 14px rgba(37, 99, 235, 0.2); color: white; }
+
+ .outline-btn { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+ .outline-btn:hover { border-color: var(--primary-color); color: var(--primary-color); background-color: rgba(37, 99, 235, 0.05); }
+
+ .success-btn { background-color: var(--success-color); color: white; }
+ .warning-btn { background-color: var(--warning-color); color: #1E293B; }
+ .danger-btn { background-color: var(--danger-color); color: white; }
+
+/* Professional Icon Buttons for Navbar */
+.icon-btn {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.icon-btn:hover {
+    background-color: var(--bg-color);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}

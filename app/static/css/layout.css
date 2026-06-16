@@ -1,0 +1,51 @@
+ /* General Wrapper */
+#wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+ /* Fixed Sidebar */
+#sidebar {
+    width: 260px;
+    min-width: 260px;
+    background-color: var(--sidebar-bg);
+    color: #fff;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+ .sidebar-brand { padding: 25px 20px; background-color: rgba(255, 255, 255, 0.02); }
+
+ #sidebar a {
+    color: #94A3B8;
+    padding: 16px 25px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+ #sidebar a:hover, #sidebar a.active {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--primary-color);
+    padding-left: 21px;
+}
+
+ /* Main Content & Topbar */
+ #page-content-wrapper { background-color: var(--bg-color); flex-grow: 1; transition: background-color 0.3s ease; }
+ .top-navbar {
+    background-color: var(--card-bg);
+    padding: 15px 30px;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.3s ease;
+}
+
+ .content-wrapper { padding: 2rem; }
